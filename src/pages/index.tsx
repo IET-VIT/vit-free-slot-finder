@@ -1,8 +1,19 @@
-import { Center } from "@chakra-ui/react"
+import { Center, Text } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import Head from "next/head"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 
 const Home: NextPage = () => {
+    const router = useRouter()
+    const [content, setContent] = useState("")
+
+    useEffect(() => {
+        const data = localStorage.getItem("data")
+        if (!data) router.replace("/upload")
+        else setContent(data)
+    }, [])
+
     return (
         <Center minH="100vh">
             <Head>
@@ -13,6 +24,7 @@ const Home: NextPage = () => {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <Text>{content}</Text>
         </Center>
     )
 }

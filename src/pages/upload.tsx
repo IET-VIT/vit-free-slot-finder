@@ -1,8 +1,29 @@
+import { AttachmentIcon } from "@chakra-ui/icons"
 import { Center, Button } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import Head from "next/head"
+import { useRouter } from "next/router"
+import { useState, useRef } from "react"
 
 const Upload: NextPage = () => {
+    const router = useRouter()
+    const [loading, setLoading] = useState(false)
+    let fileRef = useRef()
+
+    const readFile = (event) => {
+        setLoading(true)
+        const fileReader = new FileReader()
+        const { files } = event.target
+
+        fileReader.readAsText(files[0], "UTF-8")
+        fileReader.onload = (e) => {
+            const content = e.target!.result
+            if (content) localStorage.setItem("data", content.toString())
+            setLoading(false)
+            router.push("/")
+        }
+    }
+
     return (
         <Center minH="100vh">
             <Head>
@@ -13,10 +34,21 @@ const Upload: NextPage = () => {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <form method="POST" action="/api/process">
-                <input type="file" accept=".txt" name="file" id="file"></input>
-                <Button type="submit">Submit</Button>
-            </form>
+            <input
+                ref={fileRef}
+                type="file"
+                accept=".txt"
+                onChange={readFile}
+                style={{ display: "none" }}></input>
+            <Button
+                type="submit"
+                onClick={() => {
+                    fileRef.current.click()
+                }}
+                leftIcon={<AttachmentIcon />}
+                isLoading={loading}>
+                Upload TXT file
+            </Button>
         </Center>
     )
 }
