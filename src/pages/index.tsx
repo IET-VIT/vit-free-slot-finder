@@ -1,17 +1,19 @@
-import { Center, Text } from "@chakra-ui/react"
+import { Center, Flex, Text } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
+import CheckGroup from "../components/CheckGroup"
+import formatContent from "../utils/formatContent"
 
 const Home: NextPage = () => {
     const router = useRouter()
-    const [content, setContent] = useState("")
+    const [content, setContent] = useState<{ [key: string]: string }>({})
 
     useEffect(() => {
         const data = localStorage.getItem("data")
         if (!data) router.replace("/upload")
-        else setContent(data)
+        else setContent(formatContent(data))
     }, [])
 
     return (
@@ -24,7 +26,10 @@ const Home: NextPage = () => {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Text>{content}</Text>
+            <Flex flexDirection="row" flexWrap="wrap">
+                <CheckGroup names={Object.keys(content)} />
+                <Text></Text>
+            </Flex>
         </Center>
     )
 }
