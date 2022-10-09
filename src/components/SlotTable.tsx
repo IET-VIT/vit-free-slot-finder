@@ -14,8 +14,13 @@ import type Slots from "vit-timetable-explorer/dist/src/types/slots"
 const SlotTable = ({ slots }: { slots: Slots }) => {
     return (
         <TableContainer borderColor="gray" borderWidth={1} rounded="lg" py={4}>
-            <Table variant="striped" colorScheme="gray">
-                <TableCaption>Free Slots</TableCaption>
+            <Table
+                variant="striped"
+                colorScheme="gray"
+                size={{ base: "", md: "md" }}>
+                <TableCaption>
+                    Slots shown for each day are between 8:00 hrs and 20:00 hrs
+                </TableCaption>
                 <Thead>
                     <Tr>
                         <Th>DAY</Th>
