@@ -1,6 +1,5 @@
 import {
     Center,
-    useCheckboxGroup,
     Grid,
     GridItem,
     Heading,
@@ -20,7 +19,11 @@ const Home: NextPage = () => {
     const toast = useToast()
     const [content, setContent] = useState<{ [key: string]: string }>({})
     const [slots, setSlots] = useState<Slots>({})
-    const { value, getCheckboxProps } = useCheckboxGroup()
+    const [checkedItems, setCheckedItems] = useState<boolean[]>([])
+
+    useEffect(() => {
+        setCheckedItems(Object.keys(content).map(() => false))
+    }, [content])
 
     useEffect(() => {
         const data = localStorage.getItem("data")
@@ -43,10 +46,17 @@ const Home: NextPage = () => {
     }, [])
 
     useEffect(() => {
+        const names = Object.keys(content)
+        names.sort()
+        const value = []
+        for (var i = 0; i < checkedItems.length; i++) {
+            if (checkedItems[i]) value.push(names[i])
+        }
+
         const data = value.map((v) => content[v])
         const freeSlots = findFreeSlots(data)
         setSlots(freeSlots)
-    }, [value])
+    }, [checkedItems, content])
 
     return (
         <Center minH="100vh">
@@ -74,8 +84,8 @@ const Home: NextPage = () => {
                         </Heading>
                         <CheckGroup
                             names={Object.keys(content)}
-                            props={getCheckboxProps}
-                            selected={value.length}
+                            checkedItems={checkedItems}
+                            setCheckedItems={setCheckedItems}
                         />
                     </GridItem>
                     <GridItem colSpan={{ base: 1, lg: 3 }}>
