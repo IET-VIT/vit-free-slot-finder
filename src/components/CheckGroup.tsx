@@ -1,16 +1,16 @@
 import { CheckboxGroup, Checkbox, VStack } from "@chakra-ui/react"
 
-const CheckGroup = ({ names }: { names: string[] }) => {
+const CheckGroup = ({ names, props }: { names: string[]; props: any }) => {
     return (
-        <CheckboxGroup colorScheme="green">
-            <VStack>
-                {names.map((n) => (
-                    <Checkbox key={n} value={n}>
-                        {n}
-                    </Checkbox>
-                ))}
-            </VStack>
-        </CheckboxGroup>
+        <VStack
+            h={{ base: "calc(80vh - 4rem)", md: "calc(50vh - 8rem)" }}
+            align="self-start">
+            {names.map((n) => (
+                <Checkbox key={n} {...props({ value: n })}>
+                    {n}
+                </Checkbox>
+            ))}
+        </VStack>
     )
 }
 
