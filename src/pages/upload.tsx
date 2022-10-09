@@ -1,8 +1,8 @@
-import { Center } from "@chakra-ui/react"
+import { Center, Button } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import Head from "next/head"
 
-const Home: NextPage = () => {
+const Upload: NextPage = () => {
     return (
         <Center minH="100vh">
             <Head>
@@ -13,8 +13,12 @@ const Home: NextPage = () => {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <form method="POST" action="/api/process">
+                <input type="file" accept=".txt" name="file" id="file"></input>
+                <Button type="submit">Submit</Button>
+            </form>
         </Center>
     )
 }
 
-export default Home
+export default Upload
