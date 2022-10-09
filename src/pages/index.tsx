@@ -1,21 +1,18 @@
-import {
-    Center,
-    Flex,
-    Text,
-    CheckboxGroup,
-    useCheckboxGroup,
-    Grid
-} from "@chakra-ui/react"
+import { Center, useCheckboxGroup, Grid, GridItem } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import CheckGroup from "../components/CheckGroup"
+import SlotTable from "../components/SlotTable"
 import formatContent from "../utils/formatContent"
+import findFreeSlots from "vit-timetable-explorer"
+import Slots from "vit-timetable-explorer/dist/src/types/slots"
 
 const Home: NextPage = () => {
     const router = useRouter()
     const [content, setContent] = useState<{ [key: string]: string }>({})
+    const [slots, setSlots] = useState<Slots>({})
     const { value, getCheckboxProps } = useCheckboxGroup()
 
     useEffect(() => {
@@ -25,7 +22,9 @@ const Home: NextPage = () => {
     }, [])
 
     useEffect(() => {
-        console.log(value)
+        const data = value.map((v) => content[v])
+        const freeSlots = findFreeSlots(data)
+        setSlots(freeSlots)
     }, [value])
 
     return (
@@ -39,16 +38,22 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Grid
-                templateColumns="repeat(2, 1fr)"
+                templateColumns={{
+                    base: "repeat(1, 1fr)",
+                    lg: "repeat(4, 1fr)"
+                }}
                 w="100%"
-                p={{ base: 8, md: 16 }}>
-                <CheckboxGroup colorScheme="green">
+                p={8}
+                gap={8}>
+                <GridItem colSpan={1}>
                     <CheckGroup
                         names={Object.keys(content)}
                         props={getCheckboxProps}
                     />
-                </CheckboxGroup>
-                <Text>H</Text>
+                </GridItem>
+                <GridItem colSpan={3}>
+                    <SlotTable slots={slots} />
+                </GridItem>
             </Grid>
         </Center>
     )

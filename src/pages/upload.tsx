@@ -3,16 +3,17 @@ import { Center, Button } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { useState, useRef } from "react"
+import { useState, useRef, FormEvent } from "react"
 
 const Upload: NextPage = () => {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
-    let fileRef = useRef()
+    let fileRef = useRef<HTMLInputElement>()
 
-    const readFile = (event) => {
+    const readFile = (event: FormEvent<HTMLInputElement>) => {
         setLoading(true)
         const fileReader = new FileReader()
+        //@ts-ignore
         const { files } = event.target
 
         fileReader.readAsText(files[0], "UTF-8")
@@ -35,6 +36,7 @@ const Upload: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <input
+                //@ts-ignore
                 ref={fileRef}
                 type="file"
                 accept=".txt"
@@ -43,7 +45,7 @@ const Upload: NextPage = () => {
             <Button
                 type="submit"
                 onClick={() => {
-                    fileRef.current.click()
+                    fileRef.current!.click()
                 }}
                 leftIcon={<AttachmentIcon />}
                 isLoading={loading}>
