@@ -1,10 +1,12 @@
 import { AttachmentIcon } from "@chakra-ui/icons"
-import { Box, Button } from "@chakra-ui/react"
+import { Box, Button, useToast } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useState, useRef, FormEvent } from "react"
+import formatContent from "../utils/formatContent"
 
 const UploadButton = () => {
     const router = useRouter()
+    const toast = useToast()
     const [loading, setLoading] = useState(false)
     let fileRef = useRef<HTMLInputElement>()
 
@@ -17,9 +19,26 @@ const UploadButton = () => {
         fileReader.readAsText(files[0], "UTF-8")
         fileReader.onload = (e) => {
             const content = e.target!.result
-            if (content) localStorage.setItem("data", content.toString())
-            setLoading(false)
-            router.reload()
+            if (content) {
+                const contentString = content.toString().replace(/\r\n/g, "\n")
+
+                try {
+                    const data = formatContent(contentString)
+                    localStorage.setItem("data", contentString)
+                    setLoading(false)
+                    router.reload()
+                } catch (err) {
+                    setLoading(false)
+                    toast({
+                        title: "Invalid formatting",
+                        description:
+                            "We were unable to import your timetable data",
+                        status: "error",
+                        duration: 5000,
+                        isClosable: true
+                    })
+                }
+            }
         }
     }
 

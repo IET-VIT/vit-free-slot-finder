@@ -4,7 +4,8 @@ import {
     Grid,
     GridItem,
     Heading,
-    VStack
+    VStack,
+    useToast
 } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import Head from "../components/Head"
@@ -16,13 +17,29 @@ import findFreeSlots from "vit-timetable-explorer"
 import type Slots from "vit-timetable-explorer/dist/src/types/slots"
 
 const Home: NextPage = () => {
+    const toast = useToast()
     const [content, setContent] = useState<{ [key: string]: string }>({})
     const [slots, setSlots] = useState<Slots>({})
     const { value, getCheckboxProps } = useCheckboxGroup()
 
     useEffect(() => {
         const data = localStorage.getItem("data")
-        if (data) setContent(formatContent(data))
+
+        if (data) {
+            try {
+                setContent(formatContent(data))
+                toast({
+                    title: "Success",
+                    description:
+                        "We've imported your timetable data successfully",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true
+                })
+            } catch (err) {
+                localStorage.removeItem("data")
+            }
+        }
     }, [])
 
     useEffect(() => {
