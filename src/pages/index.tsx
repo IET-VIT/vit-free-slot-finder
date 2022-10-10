@@ -75,6 +75,7 @@ const Home: NextPage = () => {
                         <CheckGroup
                             names={Object.keys(content)}
                             props={getCheckboxProps}
+                            selected={value.length}
                         />
                     </GridItem>
                     <GridItem colSpan={{ base: 1, lg: 3 }}>

@@ -1,14 +1,28 @@
+import { CloseIcon } from "@chakra-ui/icons"
 import {
     CheckboxGroup,
     Checkbox,
     VStack,
     Divider,
-    Heading
+    Heading,
+    ButtonGroup,
+    Button
 } from "@chakra-ui/react"
+import { useRouter } from "next/router"
 import UploadButton from "./UploadButton"
 
-const CheckGroup = ({ names, props }: { names: string[]; props: any }) => {
+const CheckGroup = ({
+    names,
+    props,
+    selected
+}: {
+    names: string[]
+    props: any
+    selected: number
+}) => {
+    const router = useRouter()
     names.sort()
+
     return (
         <CheckboxGroup colorScheme="blue">
             <VStack
@@ -26,11 +40,27 @@ const CheckGroup = ({ names, props }: { names: string[]; props: any }) => {
                     </Checkbox>
                 ))}
                 <Divider />
-                <Heading
-                    as="h6"
+                <Heading as="h6" alignSelf="center" size="xs">{`${
+                    names.length > 0 ? `${selected} selected of ` : ``
+                }${names.length} member(s)`}</Heading>
+                <ButtonGroup
+                    variant="solid"
                     alignSelf="center"
-                    size="xs">{`${names.length} member(s)`}</Heading>
-                <UploadButton />
+                    size="md"
+                    colorScheme="blue">
+                    <UploadButton />
+                    {names.length > 0 && (
+                        <Button
+                            alignSelf="center"
+                            leftIcon={<CloseIcon />}
+                            onClick={() => {
+                                localStorage.removeItem("data")
+                                router.reload()
+                            }}>
+                            Clear
+                        </Button>
+                    )}
+                </ButtonGroup>
             </VStack>
         </CheckboxGroup>
     )
