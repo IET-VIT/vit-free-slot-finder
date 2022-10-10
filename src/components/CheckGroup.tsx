@@ -1,4 +1,10 @@
-import { CheckboxGroup, Checkbox, VStack, Divider } from "@chakra-ui/react"
+import {
+    CheckboxGroup,
+    Checkbox,
+    VStack,
+    Divider,
+    Heading
+} from "@chakra-ui/react"
 import UploadButton from "./UploadButton"
 
 const CheckGroup = ({ names, props }: { names: string[]; props: any }) => {
@@ -6,7 +12,7 @@ const CheckGroup = ({ names, props }: { names: string[]; props: any }) => {
     return (
         <CheckboxGroup colorScheme="blue">
             <VStack
-                maxH={{ base: "calc(50vh - 8rem)", lg: "calc(100vh - 12rem)" }}
+                maxH="calc(100vh - 8rem)"
                 align="self-start"
                 overflowY="scroll"
                 px={4}
@@ -20,6 +26,10 @@ const CheckGroup = ({ names, props }: { names: string[]; props: any }) => {
                     </Checkbox>
                 ))}
                 <Divider />
+                <Heading
+                    as="h6"
+                    alignSelf="center"
+                    size="xs">{`${names.length} member(s)`}</Heading>
                 <UploadButton />
             </VStack>
         </CheckboxGroup>
