@@ -13,7 +13,12 @@ import type Slots from "vit-timetable-explorer/dist/src/types/slots"
 
 const SlotTable = ({ slots }: { slots: Slots }) => {
     return (
-        <TableContainer borderColor="gray" borderWidth={1} rounded="lg" py={4}>
+        <TableContainer
+            borderColor="gray"
+            borderWidth={1}
+            rounded="lg"
+            py={4}
+            minH={{ base: "inherit", lg: "80vh" }}>
             <Table
                 variant="striped"
                 colorScheme="gray"
@@ -31,7 +36,7 @@ const SlotTable = ({ slots }: { slots: Slots }) => {
                     {Object.keys(slots).map((s) => {
                         return (
                             <Tr key={s}>
-                                <Td>{s}</Td>
+                                <Td fontWeight="semibold">{s}</Td>
                                 <Td>{slots[s].join(", ")}</Td>
                             </Tr>
                         )
