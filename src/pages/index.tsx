@@ -65,7 +65,11 @@ const Home: NextPage = () => {
         <Center minH="100vh">
             <Head />
             <VStack w="100%" p={4} spacing={4}>
-                <HStack justifyContent="center" alignItems="center" w="100%">
+                <HStack
+                    justifyContent="center"
+                    alignItems="center"
+                    w="100%"
+                    px={4}>
                     <Heading as="h1" size="lg" textAlign="start">
                         VIT Free Slot Finder
                     </Heading>
@@ -80,8 +84,7 @@ const Home: NextPage = () => {
                     borderColor="gray"
                     borderWidth={1}
                     rounded="lg"
-                    px={{ base: 4, md: 8 }}
-                    py={4}>
+                    p={{ base: 4, sm: 8 }}>
                     <Box w={{ base: "100%", lg: "33%" }}>
                         <Heading as="h2" size="md" textAlign="center" mb={4}>
                             Members

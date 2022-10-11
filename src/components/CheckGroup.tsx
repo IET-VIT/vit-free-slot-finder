@@ -35,7 +35,7 @@ const CheckGroup = ({
                     <ButtonGroup
                         variant="solid"
                         alignSelf="center"
-                        size="md"
+                        size={{ base: "sm", sm: "md" }}
                         colorScheme="blue">
                         <UploadButton />
                         {names.length > 0 && (
