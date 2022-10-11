@@ -31,6 +31,38 @@ const CheckGroup = ({
     return (
         <CheckboxGroup colorScheme="blue">
             <VStack h={{ base: "inherit", lg: "80vh" }} spacing={4}>
+                <VStack px={4}>
+                    <ButtonGroup
+                        variant="solid"
+                        alignSelf="center"
+                        size="md"
+                        colorScheme="blue">
+                        <UploadButton />
+                        {names.length > 0 && (
+                            <Button
+                                alignSelf="center"
+                                leftIcon={<CloseIcon />}
+                                onClick={() => {
+                                    localStorage.removeItem("data")
+                                    router.reload()
+                                }}>
+                                Clear
+                            </Button>
+                        )}
+                    </ButtonGroup>
+                    {names.length > 0 && <Divider />}
+                    <Heading as="h6" alignSelf="center" size="xs">{`${
+                        names.length > 0
+                            ? `${checkedItems.reduce(
+                                  (previousValue, currentValue) =>
+                                      currentValue
+                                          ? previousValue + 1
+                                          : previousValue,
+                                  0
+                              )} selected of `
+                            : ``
+                    }${names.length} member(s)`}</Heading>
+                </VStack>
                 <VStack
                     align="self-start"
                     overflowY="scroll"
@@ -40,7 +72,7 @@ const CheckGroup = ({
                     rounded="lg"
                     w="100%"
                     h="100%"
-                    maxH={{ base: "80vh", lg: "60vh" }}>
+                    maxH={{ base: "80vh", lg: "70vh" }}>
                     {names.length > 0 && (
                         <Checkbox
                             isChecked={allChecked}
@@ -66,38 +98,6 @@ const CheckGroup = ({
                             {n}
                         </Checkbox>
                     ))}
-                </VStack>
-                {names.length > 0 && <Divider />}
-                <VStack px={4} pb={4}>
-                    <Heading as="h6" alignSelf="center" size="xs">{`${
-                        names.length > 0
-                            ? `${checkedItems.reduce(
-                                  (previousValue, currentValue) =>
-                                      currentValue
-                                          ? previousValue + 1
-                                          : previousValue,
-                                  0
-                              )} selected of `
-                            : ``
-                    }${names.length} member(s)`}</Heading>
-                    <ButtonGroup
-                        variant="solid"
-                        alignSelf="center"
-                        size="md"
-                        colorScheme="blue">
-                        <UploadButton />
-                        {names.length > 0 && (
-                            <Button
-                                alignSelf="center"
-                                leftIcon={<CloseIcon />}
-                                onClick={() => {
-                                    localStorage.removeItem("data")
-                                    router.reload()
-                                }}>
-                                Clear
-                            </Button>
-                        )}
-                    </ButtonGroup>
                 </VStack>
             </VStack>
         </CheckboxGroup>

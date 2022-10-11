@@ -6,8 +6,7 @@ import {
     Tr,
     Th,
     Tbody,
-    Td,
-    Tfoot
+    Td
 } from "@chakra-ui/react"
 import type Slots from "vit-timetable-explorer/dist/src/types/slots"
 
@@ -18,26 +17,29 @@ const SlotTable = ({ slots }: { slots: Slots }) => {
             borderWidth={1}
             rounded="lg"
             py={4}
-            minH={{ base: "inherit", lg: "80vh" }}>
+            minH={{ base: "inherit", lg: "80vh" }}
+            overflowX="auto">
             <Table
                 variant="striped"
                 colorScheme="gray"
                 size={{ base: "", md: "md" }}>
-                <TableCaption>
+                <TableCaption px={4}>
                     Slots shown for each day are between 8:00 hrs and 20:00 hrs
                 </TableCaption>
                 <Thead>
                     <Tr>
-                        <Th>DAY</Th>
-                        <Th>TIMINGS</Th>
+                        <Th px={2}>DAY</Th>
+                        <Th px={2}>TIMINGS</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
                     {Object.keys(slots).map((s) => {
                         return (
                             <Tr key={s}>
-                                <Td fontWeight="semibold">{s}</Td>
-                                <Td>{slots[s].join(", ")}</Td>
+                                <Td fontWeight="semibold" px={2}>
+                                    {s}
+                                </Td>
+                                <Td px={2}>{slots[s].join(", ")}</Td>
                             </Tr>
                         )
                     })}

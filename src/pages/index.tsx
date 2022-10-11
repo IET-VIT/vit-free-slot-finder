@@ -1,11 +1,4 @@
-import {
-    Center,
-    Grid,
-    GridItem,
-    Heading,
-    VStack,
-    useToast
-} from "@chakra-ui/react"
+import { Center, Box, Heading, VStack, useToast, Stack } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import Head from "../components/Head"
 import { useEffect, useState } from "react"
@@ -65,20 +58,17 @@ const Home: NextPage = () => {
                 <Heading as="h1" size="lg" textAlign="center" mb={4}>
                     VIT Free Slot Finder
                 </Heading>
-                <Grid
-                    templateColumns={{
-                        base: "repeat(1, 1fr)",
-                        lg: "repeat(4, 1fr)"
-                    }}
+                <Stack
+                    direction={{ base: "column", lg: "row" }}
                     justifyContent="center"
                     w="100%"
-                    gap={8}
+                    spacing={8}
                     borderColor="gray"
                     borderWidth={1}
                     rounded="lg"
-                    px={8}
+                    px={{ base: 4, md: 8 }}
                     py={4}>
-                    <GridItem colSpan={1}>
+                    <Box w={{ base: "100%", lg: "33%" }}>
                         <Heading as="h2" size="md" textAlign="center" mb={4}>
                             Members
                         </Heading>
@@ -87,14 +77,14 @@ const Home: NextPage = () => {
                             checkedItems={checkedItems}
                             setCheckedItems={setCheckedItems}
                         />
-                    </GridItem>
-                    <GridItem colSpan={{ base: 1, lg: 3 }}>
+                    </Box>
+                    <Box w={{ base: "100%", lg: "67%" }}>
                         <Heading as="h2" size="md" textAlign="center" mb={4}>
                             Free Slots
                         </Heading>
                         <SlotTable slots={slots} />
-                    </GridItem>
-                </Grid>
+                    </Box>
+                </Stack>
             </VStack>
         </Center>
     )
