@@ -71,7 +71,6 @@ const CheckGroup = ({
                     borderWidth={1}
                     rounded="lg"
                     w="100%"
-                    h="100%"
                     maxH={{ base: "80vh", lg: "70vh" }}>
                     {names.length > 0 && (
                         <Checkbox
