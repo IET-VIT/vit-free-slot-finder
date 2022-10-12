@@ -5,7 +5,7 @@ import { useState, useRef, FormEvent } from "react"
 import formatContent from "../utils/formatContent"
 import findFreeSlots from "vit-timetable-explorer"
 
-const UploadButton = () => {
+const UploadButton = ({ profile }: { profile?: string }) => {
     const router = useRouter()
     const toast = useToast()
     const [loading, setLoading] = useState(false)
@@ -28,7 +28,10 @@ const UploadButton = () => {
                     const timings = findFreeSlots(
                         Object.keys(data).map((k) => data[k])
                     )
-                    localStorage.setItem("data", contentString)
+                    localStorage.setItem(
+                        `slot-finder-profile-${profile ? profile : ""}`,
+                        contentString
+                    )
                     setLoading(false)
                     router.reload()
                 } catch (err) {
