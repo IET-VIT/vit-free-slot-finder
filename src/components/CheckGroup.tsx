@@ -63,16 +63,16 @@ const CheckGroup = ({
                             : ``
                     }${names.length} member(s)`}</Heading>
                 </VStack>
-                <VStack
-                    align="self-start"
-                    overflowY="scroll"
-                    p={4}
-                    borderColor="gray"
-                    borderWidth={1}
-                    rounded="lg"
-                    w="100%"
-                    maxH={{ base: "80vh", lg: "70vh" }}>
-                    {names.length > 0 && (
+                {names.length > 0 && (
+                    <VStack
+                        align="self-start"
+                        overflowY="scroll"
+                        p={4}
+                        borderColor="gray"
+                        borderWidth={1}
+                        rounded="lg"
+                        w="100%"
+                        maxH={{ base: "80vh", lg: "70vh" }}>
                         <Checkbox
                             isChecked={allChecked}
                             isIndeterminate={isIndeterminate}
@@ -83,21 +83,21 @@ const CheckGroup = ({
                             }>
                             Select all
                         </Checkbox>
-                    )}
-                    {names.length > 0 && <Divider />}
-                    {names.map((n, i) => (
-                        <Checkbox
-                            key={n}
-                            isChecked={checkedItems[i]}
-                            onChange={(e) => {
-                                const newCheckedItems = [...checkedItems]
-                                newCheckedItems[i] = e.target.checked
-                                setCheckedItems(newCheckedItems)
-                            }}>
-                            {n}
-                        </Checkbox>
-                    ))}
-                </VStack>
+                        <Divider />
+                        {names.map((n, i) => (
+                            <Checkbox
+                                key={n}
+                                isChecked={checkedItems[i]}
+                                onChange={(e) => {
+                                    const newCheckedItems = [...checkedItems]
+                                    newCheckedItems[i] = e.target.checked
+                                    setCheckedItems(newCheckedItems)
+                                }}>
+                                {n}
+                            </Checkbox>
+                        ))}
+                    </VStack>
+                )}
             </VStack>
         </CheckboxGroup>
     )
