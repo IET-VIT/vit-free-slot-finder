@@ -3,6 +3,7 @@ import { Box, Button, useToast } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useState, useRef, FormEvent } from "react"
 import formatContent from "../utils/formatContent"
+import findFreeSlots from "vit-timetable-explorer"
 
 const UploadButton = () => {
     const router = useRouter()
@@ -24,6 +25,9 @@ const UploadButton = () => {
 
                 try {
                     const data = formatContent(contentString)
+                    const timings = findFreeSlots(
+                        Object.keys(data).map((k) => data[k])
+                    )
                     localStorage.setItem("data", contentString)
                     setLoading(false)
                     router.reload()

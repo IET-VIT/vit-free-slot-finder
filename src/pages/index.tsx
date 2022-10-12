@@ -16,8 +16,10 @@ import formatContent from "../utils/formatContent"
 import findFreeSlots from "vit-timetable-explorer"
 import type Slots from "vit-timetable-explorer/dist/src/types/slots"
 import ColorToggle from "../components/ColorToggle"
+import { useRouter } from "next/router"
 
 const Home: NextPage = () => {
+    const router = useRouter()
     const toast = useToast()
     const [content, setContent] = useState<{ [key: string]: string }>({})
     const [slots, setSlots] = useState<Slots>({})
@@ -43,6 +45,7 @@ const Home: NextPage = () => {
                 })
             } catch (err) {
                 localStorage.removeItem("data")
+                router.reload()
             }
         }
     }, [])
@@ -50,14 +53,20 @@ const Home: NextPage = () => {
     useEffect(() => {
         const names = Object.keys(content)
         names.sort()
+
         const value = []
         for (var i = 0; i < checkedItems.length; i++) {
             if (checkedItems[i]) value.push(names[i])
         }
-
         const data = value.map((v) => content[v])
-        const freeSlots = findFreeSlots(data)
-        setSlots(freeSlots)
+
+        try {
+            const freeSlots = findFreeSlots(data)
+            setSlots(freeSlots)
+        } catch (err) {
+            localStorage.removeItem("data")
+            router.reload()
+        }
     }, [checkedItems, content])
 
     return (
