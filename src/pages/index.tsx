@@ -1,5 +1,4 @@
 import {
-    Center,
     Box,
     Heading,
     VStack,
@@ -62,7 +61,7 @@ const Home: NextPage = () => {
     }, [checkedItems, content])
 
     return (
-        <Center minH="100vh">
+        <>
             <Head />
             <VStack w="100%" p={4} spacing={4}>
                 <HStack
@@ -103,7 +102,7 @@ const Home: NextPage = () => {
                     </Box>
                 </Stack>
             </VStack>
-        </Center>
+        </>
     )
 }
 
