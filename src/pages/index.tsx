@@ -77,7 +77,7 @@ const Home: NextPage<{ profile?: string }> = ({ profile }) => {
         <>
             <Head />
             <VStack w="100%" p={4} spacing={4}>
-                <Navbar />
+                <Navbar profile={profile} />
                 <Stack
                     direction={{ base: "column", lg: "row" }}
                     justifyContent="center"

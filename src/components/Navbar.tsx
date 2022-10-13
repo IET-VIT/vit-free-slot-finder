@@ -13,8 +13,9 @@ import {
 import ColorToggle from "./ColorToggle"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
+import DeleteButton from "./DeleteButton"
 
-const Navbar = () => {
+const Navbar = ({ profile }: { profile?: string }) => {
     const router = useRouter()
     const [profiles, setProfiles] = useState<string[]>([])
     const prefix = "slot-finder-profile-"
@@ -56,6 +57,7 @@ const Navbar = () => {
                     </MenuItem>
                 </MenuList>
             </Menu>
+            {profile && <DeleteButton />}
             <ColorToggle />
         </HStack>
     )

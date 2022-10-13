@@ -14,7 +14,6 @@ const ColorToggle = () => {
                 fontSize="xl"
                 aria-label="Theme switcher"
                 size="lg"
-                color={`${colorMode}.accent`}
                 variant="ghost"
             />
         </Tooltip>
