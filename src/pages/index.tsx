@@ -10,6 +10,7 @@ import type Slots from "vit-timetable-explorer/dist/src/types/slots"
 import { useRouter } from "next/router"
 import Navbar from "../components/Navbar"
 import CTA from "../components/CTA"
+import Error from "next/error"
 
 const Home: NextPage<{ profile?: string }> = ({ profile }) => {
     const router = useRouter()
@@ -17,13 +18,17 @@ const Home: NextPage<{ profile?: string }> = ({ profile }) => {
     const [content, setContent] = useState<{ [key: string]: string }>({})
     const [slots, setSlots] = useState<Slots>({})
     const [checkedItems, setCheckedItems] = useState<boolean[]>([])
+    const [notFound, setNotFound] = useState(false)
 
     useEffect(() => {
         setCheckedItems(Object.keys(content).map(() => false))
     }, [content])
 
     useEffect(() => {
-        const data = localStorage.getItem(profile ? profile : "default")
+        const data = localStorage.getItem(
+            `slot-finder-profile-${profile ? profile : ""}`
+        )
+        setNotFound(data ? false : true)
 
         if (data) {
             try {
@@ -37,7 +42,9 @@ const Home: NextPage<{ profile?: string }> = ({ profile }) => {
                     isClosable: true
                 })
             } catch (err) {
-                localStorage.removeItem(profile ? profile : "default")
+                localStorage.removeItem(
+                    `slot-finder-profile-${profile ? profile : ""}`
+                )
                 router.reload()
             }
         }
@@ -57,10 +64,14 @@ const Home: NextPage<{ profile?: string }> = ({ profile }) => {
             const freeSlots = findFreeSlots(data)
             setSlots(freeSlots)
         } catch (err) {
-            localStorage.removeItem(profile ? profile : "default")
+            localStorage.removeItem(
+                `slot-finder-profile-${profile ? profile : ""}`
+            )
             router.reload()
         }
     }, [checkedItems, content])
+
+    if (profile && notFound) return <Error statusCode={404} />
 
     return (
         <>

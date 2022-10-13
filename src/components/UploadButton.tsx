@@ -29,7 +29,7 @@ const UploadButton = ({ profile }: { profile?: string }) => {
                         Object.keys(data).map((k) => data[k])
                     )
                     localStorage.setItem(
-                        profile ? profile : "default",
+                        `slot-finder-profile-${profile ? profile : ""}`,
                         contentString
                     )
                     setLoading(false)

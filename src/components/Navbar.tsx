@@ -11,8 +11,21 @@ import {
     MenuDivider
 } from "@chakra-ui/react"
 import ColorToggle from "./ColorToggle"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/router"
 
 const Navbar = () => {
+    const router = useRouter()
+    const [profiles, setProfiles] = useState<string[]>([])
+    const prefix = "slot-finder-profile-"
+
+    useEffect(() => {
+        const data = Object.keys(localStorage).filter(
+            (k) => k.startsWith(prefix) && k.substring(prefix.length).length > 0
+        )
+        setProfiles(data)
+    }, [])
+
     return (
         <HStack justifyContent="center" alignItems="center" w="100%" px={4}>
             <Heading as="h1" size="lg" textAlign="start">
@@ -27,11 +40,15 @@ const Navbar = () => {
                     Profiles
                 </MenuButton>
                 <MenuList>
-                    <MenuItem>Default</MenuItem>
-                    <MenuDivider />
-                    <MenuItem>Create a Copy</MenuItem>
-                    <MenuItem>Mark as Draft</MenuItem>
-                    <MenuItem>Delete</MenuItem>
+                    <MenuItem onClick={() => router.push(`/`)}>
+                        Default
+                    </MenuItem>
+                    {profiles.length > 0 && <MenuDivider />}
+                    {profiles.map((p) => (
+                        <MenuItem key={p} onClick={() => router.push(`/${p}`)}>
+                            {p}
+                        </MenuItem>
+                    ))}
                     <MenuDivider />
                     <MenuItem>
                         <AddIcon />

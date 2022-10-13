@@ -13,6 +13,7 @@ const CTA = ({
     profile?: string
 }) => {
     const router = useRouter()
+
     return (
         <VStack px={4}>
             <ButtonGroup
@@ -20,14 +21,14 @@ const CTA = ({
                 alignSelf="center"
                 size={{ base: "sm", sm: "md" }}
                 colorScheme="blue">
-                <UploadButton profile={profile}/>
+                <UploadButton profile={profile} />
                 {names.length > 0 && (
                     <Button
                         alignSelf="center"
                         leftIcon={<CloseIcon />}
                         onClick={() => {
                             localStorage.removeItem(
-                                profile ? profile : "default"
+                                `slot-finder-profile-${profile ? profile : ""}`
                             )
                             router.reload()
                         }}>
