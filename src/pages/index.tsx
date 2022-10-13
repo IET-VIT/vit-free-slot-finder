@@ -1,12 +1,4 @@
-import {
-    Box,
-    Heading,
-    VStack,
-    useToast,
-    Stack,
-    HStack,
-    Spacer
-} from "@chakra-ui/react"
+import { Box, Heading, VStack, useToast, Stack } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import Head from "../components/Head"
 import { useEffect, useState } from "react"
@@ -15,8 +7,8 @@ import SlotTable from "../components/SlotTable"
 import formatContent from "../utils/formatContent"
 import findFreeSlots from "vit-timetable-explorer"
 import type Slots from "vit-timetable-explorer/dist/src/types/slots"
-import ColorToggle from "../components/ColorToggle"
 import { useRouter } from "next/router"
+import Navbar from "../components/Navbar"
 
 const Home: NextPage = () => {
     const router = useRouter()
@@ -73,17 +65,7 @@ const Home: NextPage = () => {
         <>
             <Head />
             <VStack w="100%" p={4} spacing={4}>
-                <HStack
-                    justifyContent="center"
-                    alignItems="center"
-                    w="100%"
-                    px={4}>
-                    <Heading as="h1" size="lg" textAlign="start">
-                        VIT Free Slot Finder
-                    </Heading>
-                    <Spacer />
-                    <ColorToggle />
-                </HStack>
+                <Navbar />
                 <Stack
                     direction={{ base: "column", lg: "row" }}
                     justifyContent="center"
