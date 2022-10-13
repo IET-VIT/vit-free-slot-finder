@@ -9,8 +9,9 @@ import findFreeSlots from "vit-timetable-explorer"
 import type Slots from "vit-timetable-explorer/dist/src/types/slots"
 import { useRouter } from "next/router"
 import Navbar from "../components/Navbar"
+import CTA from "../components/CTA"
 
-const Home: NextPage = () => {
+const Home: NextPage<{ profile?: string }> = ({ profile }) => {
     const router = useRouter()
     const toast = useToast()
     const [content, setContent] = useState<{ [key: string]: string }>({})
@@ -22,7 +23,7 @@ const Home: NextPage = () => {
     }, [content])
 
     useEffect(() => {
-        const data = localStorage.getItem("data")
+        const data = localStorage.getItem(profile ? profile : "default")
 
         if (data) {
             try {
@@ -36,7 +37,7 @@ const Home: NextPage = () => {
                     isClosable: true
                 })
             } catch (err) {
-                localStorage.removeItem("data")
+                localStorage.removeItem(profile ? profile : "default")
                 router.reload()
             }
         }
@@ -56,7 +57,7 @@ const Home: NextPage = () => {
             const freeSlots = findFreeSlots(data)
             setSlots(freeSlots)
         } catch (err) {
-            localStorage.removeItem("data")
+            localStorage.removeItem(profile ? profile : "default")
             router.reload()
         }
     }, [checkedItems, content])
@@ -79,11 +80,18 @@ const Home: NextPage = () => {
                         <Heading as="h2" size="md" textAlign="center" mb={4}>
                             Members
                         </Heading>
-                        <CheckGroup
-                            names={Object.keys(content)}
-                            checkedItems={checkedItems}
-                            setCheckedItems={setCheckedItems}
-                        />
+                        <VStack h={{ base: "inherit", lg: "80vh" }} spacing={4}>
+                            <CTA
+                                names={Object.keys(content)}
+                                checkedItems={checkedItems}
+                                profile={profile}
+                            />
+                            <CheckGroup
+                                names={Object.keys(content)}
+                                checkedItems={checkedItems}
+                                setCheckedItems={setCheckedItems}
+                            />
+                        </VStack>
                     </Box>
                     <Box w={{ base: "100%", lg: "67%" }}>
                         <Heading as="h2" size="md" textAlign="center" mb={4}>
