@@ -53,8 +53,12 @@ const Navbar = ({ profile }: { profile?: string }) => {
                     </MenuItem>
                     {profiles.length > 0 && <MenuDivider />}
                     {profiles.map((p) => (
-                        <MenuItem key={p} onClick={() => router.push(`/${p}`)}>
-                            {p}
+                        <MenuItem
+                            key={p}
+                            onClick={() =>
+                                router.push(`/${p.substring(prefix.length)}`)
+                            }>
+                            {p.substring(prefix.length)}
                         </MenuItem>
                     ))}
                     <MenuDivider />
@@ -70,7 +74,7 @@ const Navbar = ({ profile }: { profile?: string }) => {
                     />
                 </MenuList>
             </Menu>
-            {profile && <DeleteButton />}
+            {profile && <DeleteButton profile={profile} />}
             <ColorToggle />
         </HStack>
     )

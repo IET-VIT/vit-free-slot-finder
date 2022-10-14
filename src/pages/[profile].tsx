@@ -1,11 +1,9 @@
 import { NextPage } from "next"
 import { useRouter } from "next/router"
-import Home from "./index"
+import Main from "../components/Main"
 
 const Profile: NextPage = () => {
-    const router = useRouter()
-    const { profile } = router.query
-    return <Home profile={profile?.toString().toLowerCase()} />
+    return <Main />
 }
 
 export default Profile
