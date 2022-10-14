@@ -24,9 +24,11 @@ const AddProfile = ({
 }: AlertDialogProps) => {
     const router = useRouter()
     const [input, setInput] = useState("")
+    const [loading, setLoading] = useState(false)
     //@ts-ignore
     const handleInputChange = (e) => setInput(e.target.value)
-    const isError = input.trim().length > 15
+    const [exists, setExists] = useState(false)
+    const isError = input.trim().length > 15 || exists
     const prefix = "slot-finder-profile-"
 
     return (
@@ -42,9 +44,10 @@ const AddProfile = ({
 
                     <AlertDialogBody>
                         <FormControl isInvalid={isError} isRequired>
-                            <FormLabel>Email</FormLabel>
+                            <FormLabel>Name</FormLabel>
                             <Input
-                                type="email"
+                                placeholder="Just a random name maybe..."
+                                type="text"
                                 value={input}
                                 onChange={handleInputChange}
                             />
@@ -54,8 +57,9 @@ const AddProfile = ({
                                 </FormHelperText>
                             ) : (
                                 <FormErrorMessage>
-                                    Name has to be less than or equal to 15
-                                    characters
+                                    {exists
+                                        ? "Profile with the given name already exists"
+                                        : "Name has to be less than or equal to 15 characters"}
                                 </FormErrorMessage>
                             )}
                         </FormControl>
@@ -71,14 +75,27 @@ const AddProfile = ({
                         <Button
                             colorScheme="blue"
                             onClick={() => {
-                                localStorage.setItem(
-                                    `${prefix}${input.trim().toLowerCase()}`,
-                                    ""
+                                setLoading(true)
+                                const data = localStorage.getItem(
+                                    `${prefix}${input.trim()}`
                                 )
-                                router.push(`/${input.trim().toLowerCase()}`)
+                                setExists(
+                                    data || data?.length === 0 ? true : false
+                                )
+
+                                if (!(data || data?.length === 0)) {
+                                    localStorage.setItem(
+                                        `${prefix}${input.trim()}`,
+                                        ""
+                                    )
+                                    setLoading(false)
+                                    router.push(`/${input.trim()}`)
+                                    onClose()
+                                } else setLoading(false)
                             }}
                             ml={3}
-                            isDisabled={input === "" || isError}>
+                            isLoading={loading}
+                            isDisabled={input.trim() === "" || isError}>
                             Create
                         </Button>
                     </AlertDialogFooter>

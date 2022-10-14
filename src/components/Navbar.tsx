@@ -52,15 +52,16 @@ const Navbar = ({ profile }: { profile?: string }) => {
                         Default
                     </MenuItem>
                     {profiles.length > 0 && <MenuDivider />}
-                    {profiles.map((p) => (
-                        <MenuItem
-                            key={p}
-                            onClick={() =>
-                                router.push(`/${p.substring(prefix.length)}`)
-                            }>
-                            {p.substring(prefix.length)}
-                        </MenuItem>
-                    ))}
+                    {profiles.map((p) => {
+                        const str = p.substring(prefix.length)
+                        return (
+                            <MenuItem
+                                key={p}
+                                onClick={() => router.push(`/${str}`)}>
+                                {str}
+                            </MenuItem>
+                        )
+                    })}
                     <MenuDivider />
                     <MenuItem onClick={onOpen}>
                         <AddIcon />
