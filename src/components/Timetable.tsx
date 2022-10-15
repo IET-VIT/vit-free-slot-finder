@@ -27,6 +27,7 @@ const Slot = (props: GridItemProps) => {
 
 const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
     const matrix = getSlotPositions(freeSlots)
+
     return (
         <Grid
             w="100%"
@@ -35,10 +36,10 @@ const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
             rounded="lg"
             borderWidth={1}
             borderColor="gray">
-            <Slot rowSpan={2} roundedTopLeft="lg">
+            <Slot rowSpan={2} roundedTopLeft="lg" fontWeight="black">
                 Theory
             </Slot>
-            <Slot>Start</Slot>
+            <Slot fontWeight="bold">Start</Slot>
             {startTheory.map((t, i) => (
                 <Slot
                     key={t === "-" ? `-${i}` : t}
@@ -48,16 +49,18 @@ const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
                     {t}
                 </Slot>
             ))}
-            <Slot>End</Slot>
+            <Slot fontWeight="bold">End</Slot>
             {endTheory.map((t, i) => (
                 <Slot key={t === "-" ? `-${i}` : t}>{t}</Slot>
             ))}
-            <Slot rowSpan={2}>Lab</Slot>
-            <Slot>Start</Slot>
+            <Slot rowSpan={2} fontWeight="black">
+                Lab
+            </Slot>
+            <Slot fontWeight="bold">Start</Slot>
             {startLab.map((t, i) => (
                 <Slot key={t === "-" ? `-${i}` : t}>{t}</Slot>
             ))}
-            <Slot>End</Slot>
+            <Slot fontWeight="bold">End</Slot>
             {endLab.map((t, i) => (
                 <Slot key={t === "-" ? `-${i}` : t}>{t}</Slot>
             ))}
@@ -69,10 +72,11 @@ const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
                             rowSpan={2}
                             {...(i === days.length - 1 && {
                                 roundedBottomLeft: "lg"
-                            })}>
+                            })}
+                            fontWeight="black">
                             {d}
                         </Slot>
-                        <Slot>Theory</Slot>
+                        <Slot fontWeight="bold">Theory</Slot>
                         {slots[i][0].map((t, j) => (
                             <Slot
                                 key={t === "-" ? `-${j}` : t}
@@ -82,7 +86,7 @@ const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
                                 {t}
                             </Slot>
                         ))}
-                        <Slot>Lab</Slot>
+                        <Slot fontWeight="bold">Lab</Slot>
                         {slots[i][1].map((t, j) => (
                             <Slot
                                 key={t === "-" ? `-${j}` : t}
