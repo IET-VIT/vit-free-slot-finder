@@ -1,4 +1,14 @@
-import { Box, Heading, VStack, useToast, Stack } from "@chakra-ui/react"
+import {
+    Box,
+    Heading,
+    VStack,
+    useToast,
+    Stack,
+    FormLabel,
+    Switch,
+    Flex,
+    Divider
+} from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import CheckGroup from "../components/CheckGroup"
 import SlotTable from "../components/SlotTable"
@@ -18,6 +28,8 @@ const Main = () => {
     const toast = useToast()
     const [content, setContent] = useState<{ [key: string]: string }>({})
     const [slots, setSlots] = useState<Slots>({})
+    const [formattedSlots, setFormattedSlots] = useState<Slots>({})
+    const [weekend, setWeekend] = useState(false)
     const [checkedItems, setCheckedItems] = useState<boolean[]>([])
     const [notFound, setNotFound] = useState(false)
 
@@ -74,6 +86,29 @@ const Main = () => {
         }
     }, [checkedItems, content])
 
+    useEffect(() => {
+        const newSlots = { ...slots }
+        if (weekend) setFormattedSlots(newSlots)
+        else {
+            delete newSlots["SAT"]
+            delete newSlots["SUN"]
+            setFormattedSlots(newSlots)
+        }
+    }, [weekend, slots])
+
+    const WeekendSwitch = () => (
+        <Flex alignItems="center">
+            <FormLabel htmlFor="show-weekend" mb="0">
+                Display weekends
+            </FormLabel>
+            <Switch
+                isChecked={weekend}
+                id="show-weekend"
+                onChange={(e) => setWeekend(e.target.checked)}
+            />
+        </Flex>
+    )
+
     if (profile && notFound) return <Error statusCode={404} />
 
     return (
@@ -98,6 +133,16 @@ const Main = () => {
                             checkedItems={checkedItems}
                             profile={profile?.toString()}
                         />
+                        <Flex alignItems="center">
+                            <FormLabel htmlFor="show-weekend" mb="0">
+                                Display weekends
+                            </FormLabel>
+                            <Switch
+                                isChecked={weekend}
+                                id="show-weekend"
+                                onChange={(e) => setWeekend(e.target.checked)}
+                            />
+                        </Flex>
                         <CheckGroup
                             names={Object.keys(content)}
                             checkedItems={checkedItems}
@@ -109,15 +154,24 @@ const Main = () => {
                     <Heading as="h2" size="md" textAlign="center" mb={4}>
                         Free Slots
                     </Heading>
-                    <SlotTable slots={slots} />
+                    <SlotTable slots={formattedSlots} />
                 </Box>
             </Stack>
-            <Box w="100%" pt={4}>
-                <Heading as="h2" size="md" textAlign="center" mb={4}>
+            <Divider />
+            <VStack
+                w="100%"
+                textAlign="center"
+                spacing={4}
+                rounded="lg"
+                borderWidth={1}
+                borderColor="gray"
+                p={4}>
+                <Heading as="h2" size="md" textAlign="center">
                     Timetable View
                 </Heading>
-                <Timetable freeSlots={slots} />
-            </Box>
+                <WeekendSwitch />
+                <Timetable freeSlots={formattedSlots} weekend={weekend} />
+            </VStack>
         </VStack>
     )
 }

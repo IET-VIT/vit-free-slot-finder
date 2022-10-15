@@ -26,18 +26,18 @@ const Slot = (props: GridItemProps) => {
     )
 }
 
-const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
+const Timetable = ({
+    freeSlots,
+    weekend
+}: {
+    freeSlots: Slots
+    weekend: boolean
+}) => {
     const matrix = getSlotPositions(freeSlots)
+    const daysToShow = weekend ? days : days.slice(0, 5)
 
     return (
-        <Grid
-            w="100%"
-            overflow="auto"
-            templateColumns="repeat(16, 1fr)"
-            rounded="lg"
-            borderWidth={1}
-            borderColor="gray"
-            p={4}>
+        <Grid w="100%" overflow="auto" templateColumns="repeat(16, 1fr)">
             <Slot
                 rowSpan={2}
                 roundedTopLeft="lg"
@@ -95,13 +95,13 @@ const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
                     {t}
                 </Slot>
             ))}
-            {days.map((d, i) => {
+            {daysToShow.map((d, i) => {
                 return (
                     <>
                         <Slot
                             key={d}
                             rowSpan={2}
-                            {...(i === days.length - 1 && {
+                            {...(i === daysToShow.length - 1 && {
                                 roundedBottomLeft: "lg"
                             })}
                             fontWeight="bold"
@@ -133,7 +133,7 @@ const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
                                     bgColor: "#ccff32",
                                     fontWeight: "semibold"
                                 })}
-                                {...(i === days.length - 1 &&
+                                {...(i === daysToShow.length - 1 &&
                                     j === slots[i][1].length - 1 && {
                                         roundedBottomRight: "lg"
                                     })}>
