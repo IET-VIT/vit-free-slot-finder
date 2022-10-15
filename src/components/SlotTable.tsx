@@ -39,7 +39,11 @@ const SlotTable = ({ slots }: { slots: Slots }) => {
                                 <Td fontWeight="semibold" px={2}>
                                     {s}
                                 </Td>
-                                <Td px={2}>{slots[s].join(", ")}</Td>
+                                <Td px={2}>
+                                    {slots[s]
+                                        .map((s) => `${s.start} to ${s.end}`)
+                                        .join(", ")}
+                                </Td>
                             </Tr>
                         )
                     })}

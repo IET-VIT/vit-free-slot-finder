@@ -1,4 +1,5 @@
 import { Grid, GridItem, GridItemProps, Text } from "@chakra-ui/react"
+import Slots from "vit-timetable-explorer/dist/src/types/slots"
 
 const Slot = (props: GridItemProps) => {
     return (
@@ -56,7 +57,7 @@ const slots = [
 
 const days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
 
-const Timetable = () => {
+const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
     return (
         <Grid
             templateColumns="repeat(16, 1fr)"

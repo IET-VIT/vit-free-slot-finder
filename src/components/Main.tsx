@@ -79,7 +79,7 @@ const Main = () => {
     return (
         <VStack w="100%" p={4} spacing={4}>
             <Navbar profile={profile?.toString()} />
-            <Timetable />
+            <Timetable freeSlots={slots} />
             <Stack
                 direction={{ base: "column", lg: "row" }}
                 justifyContent="center"
