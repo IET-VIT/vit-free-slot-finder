@@ -68,8 +68,14 @@ const Timetable = () => {
                 Theory
             </Slot>
             <Slot>Start</Slot>
-            {startTheory.map((t) => (
-                <Slot key={t}>{t}</Slot>
+            {startTheory.map((t, i) => (
+                <Slot
+                    key={t}
+                    {...(i === startLab.length - 1 && {
+                        roundedTopRight: "lg"
+                    })}>
+                    {t}
+                </Slot>
             ))}
             <Slot>End</Slot>
             {endTheory.map((t) => (
@@ -87,7 +93,12 @@ const Timetable = () => {
             {days.map((d, i) => {
                 return (
                     <>
-                        <Slot key={d} rowSpan={2}>
+                        <Slot
+                            key={d}
+                            rowSpan={2}
+                            {...(i === days.length - 1 && {
+                                roundedBottomLeft: "lg"
+                            })}>
                             {d}
                         </Slot>
                         <Slot>Theory</Slot>
@@ -95,8 +106,15 @@ const Timetable = () => {
                             <Slot key={t}>{t}</Slot>
                         ))}
                         <Slot>Lab</Slot>
-                        {slots[i][1].map((t) => (
-                            <Slot key={t}>{t}</Slot>
+                        {slots[i][1].map((t, j) => (
+                            <Slot
+                                key={t}
+                                {...(i === days.length - 1 &&
+                                    j === slots[i][1].length - 1 && {
+                                        roundedBottomRight: "lg"
+                                    })}>
+                                {t}
+                            </Slot>
                         ))}
                     </>
                 )
