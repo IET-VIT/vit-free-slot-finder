@@ -79,7 +79,6 @@ const Main = () => {
     return (
         <VStack w="100%" p={4} spacing={4}>
             <Navbar profile={profile?.toString()} />
-            <Timetable freeSlots={slots} />
             <Stack
                 direction={{ base: "column", lg: "row" }}
                 justifyContent="center"
@@ -113,6 +112,12 @@ const Main = () => {
                     <SlotTable slots={slots} />
                 </Box>
             </Stack>
+            <Box w="100%" pt={4}>
+                <Heading as="h2" size="md" textAlign="center" mb={4}>
+                    Timetable View
+                </Heading>
+                <Timetable freeSlots={slots} />
+            </Box>
         </VStack>
     )
 }

@@ -16,10 +16,10 @@ const Slot = (props: GridItemProps) => {
             borderWidth={1}
             borderColor="gray"
             p={2}
-            minW={16}
+            minW={{ base: 20, lg: 16 }}
             textAlign="center"
             color="#5d6062"
-            fontSize="sm"
+            fontSize="xs"
             {...props}>
             {props.children}
         </GridItem>
@@ -37,13 +37,13 @@ const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
             rounded="lg"
             borderWidth={1}
             borderColor="gray"
-            p={12}>
+            p={4}>
             <Slot
                 rowSpan={2}
                 roundedTopLeft="lg"
-                fontWeight="black"
+                fontWeight="bold"
                 bgColor="#e1e2e2">
-                Theory
+                THEORY
             </Slot>
             <Slot fontWeight="bold" bgColor="#e1e2e2">
                 Start
@@ -70,8 +70,8 @@ const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
                     {t}
                 </Slot>
             ))}
-            <Slot rowSpan={2} fontWeight="black" bgColor="#e1e2e2">
-                Lab
+            <Slot rowSpan={2} fontWeight="bold" bgColor="#e1e2e2">
+                LAB
             </Slot>
             <Slot fontWeight="bold" bgColor="#e1e2e2">
                 Start
@@ -104,12 +104,12 @@ const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
                             {...(i === days.length - 1 && {
                                 roundedBottomLeft: "lg"
                             })}
-                            fontWeight="black"
+                            fontWeight="bold"
                             bgColor="#e1e2e2">
                             {d}
                         </Slot>
                         <Slot fontWeight="bold" bgColor="#e1e2e2">
-                            Theory
+                            THEORY
                         </Slot>
                         {slots[i][0].map((t, j) => (
                             <Slot
@@ -123,7 +123,7 @@ const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
                             </Slot>
                         ))}
                         <Slot fontWeight="bold" bgColor="#e1e2e2">
-                            Lab
+                            LAB
                         </Slot>
                         {slots[i][1].map((t, j) => (
                             <Slot
