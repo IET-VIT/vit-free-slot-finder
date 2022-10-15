@@ -13,13 +13,14 @@ import {
 const Slot = (props: GridItemProps) => {
     return (
         <GridItem
-            {...props}
             borderWidth={1}
             borderColor="gray"
             p={2}
             minW={16}
             textAlign="center"
-            fontSize="sm">
+            color="#5d6062"
+            fontSize="sm"
+            {...props}>
             {props.children}
         </GridItem>
     )
@@ -35,34 +36,64 @@ const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
             templateColumns="repeat(16, 1fr)"
             rounded="lg"
             borderWidth={1}
-            borderColor="gray">
-            <Slot rowSpan={2} roundedTopLeft="lg" fontWeight="black">
+            borderColor="gray"
+            p={12}>
+            <Slot
+                rowSpan={2}
+                roundedTopLeft="lg"
+                fontWeight="black"
+                bgColor="#e1e2e2">
                 Theory
             </Slot>
-            <Slot fontWeight="bold">Start</Slot>
+            <Slot fontWeight="bold" bgColor="#e1e2e2">
+                Start
+            </Slot>
             {startTheory.map((t, i) => (
                 <Slot
                     key={t === "-" ? `-${i}` : t}
                     {...(i === startLab.length - 1 && {
                         roundedTopRight: "lg"
-                    })}>
+                    })}
+                    fontWeight="semibold"
+                    bgColor="#ccccff">
                     {t}
                 </Slot>
             ))}
-            <Slot fontWeight="bold">End</Slot>
+            <Slot fontWeight="bold" bgColor="#e1e2e2">
+                End
+            </Slot>
             {endTheory.map((t, i) => (
-                <Slot key={t === "-" ? `-${i}` : t}>{t}</Slot>
+                <Slot
+                    key={t === "-" ? `-${i}` : t}
+                    fontWeight="semibold"
+                    bgColor="#ccccff">
+                    {t}
+                </Slot>
             ))}
-            <Slot rowSpan={2} fontWeight="black">
+            <Slot rowSpan={2} fontWeight="black" bgColor="#e1e2e2">
                 Lab
             </Slot>
-            <Slot fontWeight="bold">Start</Slot>
+            <Slot fontWeight="bold" bgColor="#e1e2e2">
+                Start
+            </Slot>
             {startLab.map((t, i) => (
-                <Slot key={t === "-" ? `-${i}` : t}>{t}</Slot>
+                <Slot
+                    key={t === "-" ? `-${i}` : t}
+                    fontWeight="semibold"
+                    bgColor="#9acbff">
+                    {t}
+                </Slot>
             ))}
-            <Slot fontWeight="bold">End</Slot>
+            <Slot fontWeight="bold" bgColor="#e1e2e2">
+                End
+            </Slot>
             {endLab.map((t, i) => (
-                <Slot key={t === "-" ? `-${i}` : t}>{t}</Slot>
+                <Slot
+                    key={t === "-" ? `-${i}` : t}
+                    fontWeight="semibold"
+                    bgColor="#9acbff">
+                    {t}
+                </Slot>
             ))}
             {days.map((d, i) => {
                 return (
@@ -73,25 +104,34 @@ const Timetable = ({ freeSlots }: { freeSlots: Slots }) => {
                             {...(i === days.length - 1 && {
                                 roundedBottomLeft: "lg"
                             })}
-                            fontWeight="black">
+                            fontWeight="black"
+                            bgColor="#e1e2e2">
                             {d}
                         </Slot>
-                        <Slot fontWeight="bold">Theory</Slot>
+                        <Slot fontWeight="bold" bgColor="#e1e2e2">
+                            Theory
+                        </Slot>
                         {slots[i][0].map((t, j) => (
                             <Slot
                                 key={t === "-" ? `-${j}` : t}
+                                bgColor="#ffffcc"
                                 {...(matrix[i][j][0] === 1 && {
-                                    bgColor: "green"
+                                    bgColor: "#ccff32",
+                                    fontWeight: "semibold"
                                 })}>
                                 {t}
                             </Slot>
                         ))}
-                        <Slot fontWeight="bold">Lab</Slot>
+                        <Slot fontWeight="bold" bgColor="#e1e2e2">
+                            Lab
+                        </Slot>
                         {slots[i][1].map((t, j) => (
                             <Slot
                                 key={t === "-" ? `-${j}` : t}
+                                bgColor="#f9efa4"
                                 {...(matrix[i][j][1] === 1 && {
-                                    bgColor: "green"
+                                    bgColor: "#ccff32",
+                                    fontWeight: "semibold"
                                 })}
                                 {...(i === days.length - 1 &&
                                     j === slots[i][1].length - 1 && {
