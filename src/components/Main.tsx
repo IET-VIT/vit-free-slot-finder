@@ -9,6 +9,7 @@ import { useRouter } from "next/router"
 import Navbar from "../components/Navbar"
 import CTA from "../components/CTA"
 import Error from "next/error"
+import Timetable from "./Timetable"
 
 const Main = () => {
     const router = useRouter()
@@ -78,6 +79,7 @@ const Main = () => {
     return (
         <VStack w="100%" p={4} spacing={4}>
             <Navbar profile={profile?.toString()} />
+            <Timetable />
             <Stack
                 direction={{ base: "column", lg: "row" }}
                 justifyContent="center"
