@@ -2,6 +2,7 @@ import { VStack, ButtonGroup, Button, Heading, Divider } from "@chakra-ui/react"
 import UploadButton from "./UploadButton"
 import { CloseIcon } from "@chakra-ui/icons"
 import { useRouter } from "next/router"
+import InfoPopover from "./InfoPopover"
 
 const CTA = ({
     names,
@@ -22,6 +23,7 @@ const CTA = ({
                 size={{ base: "sm", sm: "md" }}
                 colorScheme="blue">
                 <UploadButton profile={profile} />
+                <InfoPopover />
                 {names.length > 0 && (
                     <Button
                         alignSelf="center"
