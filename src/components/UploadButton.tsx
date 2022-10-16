@@ -16,35 +16,40 @@ const UploadButton = ({ profile }: { profile?: string }) => {
         const fileReader = new FileReader()
         //@ts-ignore
         const { files } = event.target
+        const split: string[] = files[0].name.split(".")
+        const ext = split[split.length - 1].toLowerCase()
 
         fileReader.readAsText(files[0], "UTF-8")
         fileReader.onload = (e) => {
             const content = e.target!.result
-            if (content) {
-                const contentString = content.toString().replace(/\r\n/g, "\n")
+            try {
+                if (content) {
+                    const contentString =
+                        ext === "csv"
+                            ? content.toString()
+                            : content.toString().replace(/\r\n/g, "\n")
 
-                try {
-                    const data = formatContent(contentString)
+                    const data = formatContent(contentString, ext === "csv")
                     const timings = findFreeSlots(
                         Object.keys(data).map((k) => data[k])
                     )
+
                     localStorage.setItem(
                         `slot-finder-profile-${profile ? profile : ""}`,
                         contentString
                     )
                     setLoading(false)
                     router.reload()
-                } catch (err) {
-                    setLoading(false)
-                    toast({
-                        title: "Invalid formatting",
-                        description:
-                            "We were unable to import your timetable data",
-                        status: "error",
-                        duration: 5000,
-                        isClosable: true
-                    })
-                }
+                } else throw "Invalid formatting"
+            } catch (err) {
+                setLoading(false)
+                toast({
+                    title: "Invalid formatting",
+                    description: "We were unable to import your timetable data",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true
+                })
             }
         }
     }
@@ -55,7 +60,7 @@ const UploadButton = ({ profile }: { profile?: string }) => {
                 //@ts-ignore
                 ref={fileRef}
                 type="file"
-                accept=".txt"
+                accept=".csv"
                 onChange={readFile}
                 style={{ display: "none" }}></input>
             <Button
@@ -65,7 +70,7 @@ const UploadButton = ({ profile }: { profile?: string }) => {
                 }}
                 leftIcon={<AttachmentIcon />}
                 isLoading={loading}>
-                Upload TXT file
+                Upload CSV file
             </Button>
         </Box>
     )
