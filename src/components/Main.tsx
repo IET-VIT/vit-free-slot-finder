@@ -20,6 +20,7 @@ import Navbar from "../components/Navbar"
 import CTA from "../components/CTA"
 import Error from "next/error"
 import Timetable from "./Timetable"
+import Footer from "./Footer"
 
 const Main = () => {
     const router = useRouter()
@@ -172,6 +173,7 @@ const Main = () => {
                 <WeekendSwitch />
                 <Timetable freeSlots={formattedSlots} weekend={weekend} />
             </VStack>
+            <Footer />
         </VStack>
     )
 }
