@@ -8,11 +8,12 @@ import {
     IconButton
 } from "@chakra-ui/react"
 import UploadButton from "./UploadButton"
-import { AddIcon, CloseIcon } from "@chakra-ui/icons"
+import { AddIcon, CloseIcon, DownloadIcon } from "@chakra-ui/icons"
 import { useRouter } from "next/router"
 import InfoPopover from "./InfoPopover"
 import AddMannual from "./AddMannual"
 import { useRef } from "react"
+import downloadCSV from "../utils/downloadCSV"
 
 const CTA = ({
     names,
@@ -26,6 +27,7 @@ const CTA = ({
     const router = useRouter()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef()
+    const prefix = "slot-finder-profile-"
 
     return (
         <VStack px={4}>
@@ -54,12 +56,24 @@ const CTA = ({
                         leftIcon={<CloseIcon />}
                         onClick={() => {
                             localStorage.removeItem(
-                                `slot-finder-profile-${profile ? profile : ""}`
+                                `${prefix}${profile ? profile : ""}`
                             )
                             router.reload()
                         }}>
                         Clear
                     </Button>
+                )}
+                {names.length > 0 && (
+                    <IconButton
+                        icon={<DownloadIcon />}
+                        aria-label="Download CSV"
+                        onClick={() => {
+                            const content = localStorage.getItem(
+                                `${prefix}${profile ? profile : ""}`
+                            )
+                            if (content) downloadCSV(content)
+                        }}
+                    />
                 )}
             </ButtonGroup>
             <AddMannual

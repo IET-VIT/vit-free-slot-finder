@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react"
 import { Button } from "@chakra-ui/react"
 import { useRouter } from "next/router"
+import downloadCSV from "../utils/downloadCSV"
 
 const ConfirmDialog = ({
     content,
@@ -46,16 +47,7 @@ const ConfirmDialog = ({
                         <Button
                             colorScheme="blue"
                             onClick={() => {
-                                document.write(content)
-
-                                var hiddenElement = document.createElement("a")
-                                hiddenElement.href =
-                                    "data:text/csv;charset=utf-8," +
-                                    encodeURI(content)
-                                hiddenElement.target = "_blank"
-
-                                hiddenElement.download = "updated.csv"
-                                hiddenElement.click()
+                                downloadCSV(content)
                                 onClose()
                             }}
                             ml={3}>
