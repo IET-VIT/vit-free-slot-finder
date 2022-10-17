@@ -36,11 +36,18 @@ const CTA = ({
                 colorScheme="blue">
                 <UploadButton profile={profile} />
                 <InfoPopover />
-                <IconButton
-                    aria-label="Add mannual entry"
-                    icon={<AddIcon />}
-                    onClick={onOpen}
-                />
+            </ButtonGroup>
+            <ButtonGroup
+                variant="solid"
+                alignSelf="center"
+                size={{ base: "sm", sm: "md" }}
+                colorScheme="blue">
+                <Button
+                    alignSelf="center"
+                    leftIcon={<AddIcon />}
+                    onClick={onOpen}>
+                    Add
+                </Button>
                 {names.length > 0 && (
                     <Button
                         alignSelf="center"
@@ -56,6 +63,7 @@ const CTA = ({
                 )}
             </ButtonGroup>
             <AddMannual
+                profile={profile}
                 isOpen={isOpen}
                 //@ts-ignore
                 leastDestructiveRef={cancelRef}

@@ -5,24 +5,24 @@ import {
     AlertDialogBody,
     AlertDialogContent,
     AlertDialogFooter,
-    AlertDialogProps
+    AlertDialogProps,
+    Textarea
 } from "@chakra-ui/react"
-import {
-    FormControl,
-    FormErrorMessage,
-    FormHelperText,
-    FormLabel
-} from "@chakra-ui/react"
-import { Input, Button } from "@chakra-ui/react"
+import { FormControl, FormHelperText, FormLabel } from "@chakra-ui/react"
+import { Input, Button, useToast } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useState } from "react"
+import findFreeSlots from "vit-timetable-explorer"
+import formatContent from "../utils/formatContent"
 
 const AddMannual = ({
+    profile,
     isOpen,
     leastDestructiveRef,
     onClose
-}: AlertDialogProps) => {
+}: { profile?: string } & AlertDialogProps) => {
     const router = useRouter()
+    const toast = useToast()
     const [name, setName] = useState("")
     const [timetable, setTimetable] = useState("")
     const [loading, setLoading] = useState(false)
@@ -60,9 +60,8 @@ const AddMannual = ({
                         </FormControl>
                         <FormControl isRequired mt={4}>
                             <FormLabel>Timetable</FormLabel>
-                            <Input
+                            <Textarea
                                 placeholder="Member Timetable"
-                                type="text"
                                 value={timetable}
                                 onChange={handleTimetableChange}
                             />
@@ -83,10 +82,39 @@ const AddMannual = ({
                             colorScheme="blue"
                             onClick={() => {
                                 setLoading(true)
+                                const contentString = `\r${name.trim()},\"${timetable.trim()}\"`
+                                try {
+                                    const data = formatContent(
+                                        "name,timetable" + contentString
+                                    )
+                                    const timings = findFreeSlots(
+                                        Object.keys(data).map((k) => data[k])
+                                    )
 
-                                setLoading(false)
-                                //router.push(`/${input.trim()}`)
-                                onClose()
+                                    const existing = localStorage.getItem(
+                                        `${prefix}${profile ? profile : ""}`
+                                    )
+
+                                    localStorage.setItem(
+                                        `${prefix}${profile ? profile : ""}`,
+                                        existing
+                                            ? existing.trim() + contentString
+                                            : "name,timetable" + contentString
+                                    )
+                                    setLoading(false)
+                                    onClose()
+                                    router.reload()
+                                } catch (err) {
+                                    setLoading(false)
+                                    toast({
+                                        title: "Invalid formatting",
+                                        description:
+                                            "We were unable to import your timetable data",
+                                        status: "error",
+                                        duration: 5000,
+                                        isClosable: true
+                                    })
+                                }
                             }}
                             ml={3}
                             isLoading={loading}
