@@ -1,8 +1,18 @@
-import { VStack, ButtonGroup, Button, Heading, Divider } from "@chakra-ui/react"
+import {
+    VStack,
+    ButtonGroup,
+    Button,
+    Heading,
+    Divider,
+    useDisclosure,
+    IconButton
+} from "@chakra-ui/react"
 import UploadButton from "./UploadButton"
-import { CloseIcon } from "@chakra-ui/icons"
+import { AddIcon, CloseIcon } from "@chakra-ui/icons"
 import { useRouter } from "next/router"
 import InfoPopover from "./InfoPopover"
+import AddMannual from "./AddMannual"
+import { useRef } from "react"
 
 const CTA = ({
     names,
@@ -14,6 +24,8 @@ const CTA = ({
     profile?: string
 }) => {
     const router = useRouter()
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const cancelRef = useRef()
 
     return (
         <VStack px={4}>
@@ -24,6 +36,11 @@ const CTA = ({
                 colorScheme="blue">
                 <UploadButton profile={profile} />
                 <InfoPopover />
+                <IconButton
+                    aria-label="Add mannual entry"
+                    icon={<AddIcon />}
+                    onClick={onOpen}
+                />
                 {names.length > 0 && (
                     <Button
                         alignSelf="center"
@@ -38,6 +55,12 @@ const CTA = ({
                     </Button>
                 )}
             </ButtonGroup>
+            <AddMannual
+                isOpen={isOpen}
+                //@ts-ignore
+                leastDestructiveRef={cancelRef}
+                onClose={onClose}
+            />
             {names.length > 0 && <Divider />}
             <Heading as="h6" alignSelf="center" size="xs">{`${
                 names.length > 0
