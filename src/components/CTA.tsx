@@ -7,8 +7,20 @@ import {
     useDisclosure,
     IconButton
 } from "@chakra-ui/react"
+import {
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    MenuDivider
+} from "@chakra-ui/react"
 import UploadButton from "./UploadButton"
-import { AddIcon, CloseIcon, DownloadIcon } from "@chakra-ui/icons"
+import {
+    AddIcon,
+    ChevronDownIcon,
+    CloseIcon,
+    DownloadIcon
+} from "@chakra-ui/icons"
 import { useRouter } from "next/router"
 import InfoPopover from "./InfoPopover"
 import AddMannual from "./AddMannual"
@@ -38,43 +50,44 @@ const CTA = ({
                 colorScheme="blue">
                 <UploadButton profile={profile} />
                 <InfoPopover />
-            </ButtonGroup>
-            <ButtonGroup
-                variant="solid"
-                alignSelf="center"
-                size={{ base: "sm", sm: "md" }}
-                colorScheme="blue">
-                <Button
-                    alignSelf="center"
-                    leftIcon={<AddIcon />}
-                    onClick={onOpen}>
-                    Add
-                </Button>
-                {names.length > 0 && (
-                    <Button
-                        alignSelf="center"
-                        leftIcon={<CloseIcon />}
-                        onClick={() => {
-                            localStorage.removeItem(
-                                `${prefix}${profile ? profile : ""}`
-                            )
-                            router.reload()
-                        }}>
-                        Clear
-                    </Button>
-                )}
-                {names.length > 0 && (
-                    <IconButton
-                        icon={<DownloadIcon />}
-                        aria-label="Download CSV"
-                        onClick={() => {
-                            const content = localStorage.getItem(
-                                `${prefix}${profile ? profile : ""}`
-                            )
-                            if (content) downloadCSV(content)
-                        }}
+                <Menu>
+                    <MenuButton
+                        as={IconButton}
+                        colorScheme="blue"
+                        icon={<ChevronDownIcon />}
+                        aria-label="Options"
                     />
-                )}
+                    <MenuList>
+                        <MenuItem onClick={onOpen}>
+                            <AddIcon />
+                            &nbsp;Add
+                        </MenuItem>
+                        {names.length > 0 && (
+                            <MenuItem
+                                onClick={() => {
+                                    localStorage.removeItem(
+                                        `${prefix}${profile ? profile : ""}`
+                                    )
+                                    router.reload()
+                                }}>
+                                <CloseIcon />
+                                &nbsp;Clear
+                            </MenuItem>
+                        )}
+                        {names.length > 0 && (
+                            <MenuItem
+                                onClick={() => {
+                                    const content = localStorage.getItem(
+                                        `${prefix}${profile ? profile : ""}`
+                                    )
+                                    if (content) downloadCSV(content)
+                                }}>
+                                <DownloadIcon />
+                                &nbsp;Download
+                            </MenuItem>
+                        )}
+                    </MenuList>
+                </Menu>
             </ButtonGroup>
             <AddMannual
                 profile={profile}
