@@ -44,7 +44,8 @@ const Navbar = ({ profile }: { profile?: string }) => {
                 <MenuButton
                     as={Button}
                     colorScheme="blue"
-                    rightIcon={<ChevronDownIcon />}>
+                    rightIcon={<ChevronDownIcon />}
+                    size={{ base: "sm", sm: "md" }}>
                     {profile ? profile : "Default"}
                 </MenuButton>
                 <MenuList>
