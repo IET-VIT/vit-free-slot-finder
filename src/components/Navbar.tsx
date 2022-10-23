@@ -36,7 +36,10 @@ const Navbar = ({ profile }: { profile?: string }) => {
 
     return (
         <HStack justifyContent="center" alignItems="center" w="100%" px={4}>
-            <Heading as="h1" size={{ base: "md", lg: "lg" }} textAlign="start">
+            <Heading
+                as="h1"
+                size={{ base: "sm", sm: "md", lg: "lg" }}
+                textAlign="start">
                 VIT Free Slot Finder
             </Heading>
             <Spacer />
