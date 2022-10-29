@@ -114,11 +114,17 @@ const Timetable = ({
                         {slots[i][0].map((t, j) => (
                             <Slot
                                 key={t === "-" ? `-${j}` : t}
-                                bgColor="#ffffcc"
-                                {...(matrix[i][j][0] === 1 && {
-                                    bgColor: "#ccff32",
-                                    fontWeight: "semibold"
-                                })}>
+                                bgColor={
+                                    t.trim() !== "Lunch" ? "#ffffcc" : "#e1e2e2"
+                                }
+                                fontWeight={
+                                    t.trim() !== "Lunch" ? "normal" : "semibold"
+                                }
+                                {...(t.trim() !== "Lunch" &&
+                                    matrix[i][j][0] === 1 && {
+                                        bgColor: "#ccff32",
+                                        fontWeight: "semibold"
+                                    })}>
                                 {t}
                             </Slot>
                         ))}
@@ -128,11 +134,17 @@ const Timetable = ({
                         {slots[i][1].map((t, j) => (
                             <Slot
                                 key={t === "-" ? `-${j}` : t}
-                                bgColor="#f9efa4"
-                                {...(matrix[i][j][1] === 1 && {
-                                    bgColor: "#ccff32",
-                                    fontWeight: "semibold"
-                                })}
+                                bgColor={
+                                    t.trim() !== "Lunch" ? "#f9efa4" : "#e1e2e2"
+                                }
+                                fontWeight={
+                                    t.trim() !== "Lunch" ? "normal" : "semibold"
+                                }
+                                {...(t.trim() !== "Lunch" &&
+                                    matrix[i][j][1] === 1 && {
+                                        bgColor: "#ccff32",
+                                        fontWeight: "semibold"
+                                    })}
                                 {...(i === daysToShow.length - 1 &&
                                     j === slots[i][1].length - 1 && {
                                         roundedBottomRight: "lg"
