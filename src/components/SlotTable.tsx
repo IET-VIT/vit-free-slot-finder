@@ -17,7 +17,6 @@ const SlotTable = ({ slots }: { slots: Slots }) => {
             borderWidth={1}
             rounded="lg"
             py={4}
-            minH={{ base: "inherit", lg: "80vh" }}
             overflowX="auto">
             <Table
                 variant="striped"

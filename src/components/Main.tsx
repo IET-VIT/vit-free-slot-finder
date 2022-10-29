@@ -128,7 +128,7 @@ const Main = () => {
                     <Heading as="h2" size="md" textAlign="center" mb={4}>
                         Members
                     </Heading>
-                    <VStack h={{ base: "inherit", lg: "80vh" }} spacing={4}>
+                    <VStack maxH={{ base: "75vh", lg: "85vh" }} spacing={4}>
                         <CTA
                             names={Object.keys(content)}
                             checkedItems={checkedItems}
