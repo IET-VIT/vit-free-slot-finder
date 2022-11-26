@@ -16,8 +16,11 @@ const formatContent = (content: string, csv = true) => {
             throw "Invalid formatting"
         else {
             for (var i = 1; i < data.length; i++) {
-                formattedContent[data[i][indexOfName].trim()] =
-                    data[i][indexofTimetable].trim()
+                const name = data[i][indexOfName].trim()
+                const timetable = data[i][indexofTimetable].trim()
+
+                if (name.length > 0 && timetable.length > 0)
+                    formattedContent[name] = timetable
             }
         }
     } else {
