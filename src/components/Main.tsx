@@ -113,7 +113,11 @@ const Main = () => {
     if (profile && notFound) return <Error statusCode={404} />
 
     return (
-        <VStack w="100%" p={4} spacing={4}>
+        <VStack
+            w="100%"
+            p={8}
+            spacing={8}
+            background="linear-gradient(180deg, #101C24, #1F1123 60%)">
             <Navbar profile={profile?.toString()} />
             <Stack
                 direction={{ base: "column", lg: "row" }}
