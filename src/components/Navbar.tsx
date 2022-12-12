@@ -80,7 +80,7 @@ const Navbar = ({ profile }: { profile?: string }) => {
                 </MenuList>
             </Menu>
             {profile && <DeleteButton profile={profile} />}
-            <ColorToggle />
+            {/* <ColorToggle /> */}
         </HStack>
     )
 }

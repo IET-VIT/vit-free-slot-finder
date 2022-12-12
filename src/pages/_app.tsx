@@ -3,8 +3,7 @@ import type { AppProps } from "next/app"
 import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 
 const theme = extendTheme({
-    initialColorMode: "dark",
-    useSystemColorMode: true
+    initialColorMode: "dark"
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
