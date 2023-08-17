@@ -26,7 +26,7 @@ const ConfirmDialog = ({
             <AlertDialogOverlay>
                 <AlertDialogContent>
                     <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                        Delete Customer
+                        Updated CSV
                     </AlertDialogHeader>
 
                     <AlertDialogBody>
